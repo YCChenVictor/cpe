@@ -9,6 +9,7 @@ Steps
   100
   118
   272
+  299
   ```
 * Read the test description in UVa
   ```bash
@@ -30,3 +31,5 @@ Steps
   ```bash
   python3 main.py < test/sample-1.in
   ```
+
+I will do an overall best practice after first run
