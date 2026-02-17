@@ -8,6 +8,7 @@ Steps
   # Check https://yuihuang.com/cpe-level-1-49/
   100
   118
+  272
   ```
 * Read the test description in UVa
   ```bash
