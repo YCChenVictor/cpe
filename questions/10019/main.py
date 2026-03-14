@@ -1,22 +1,21 @@
-import sys
+cases = int(input())
 
-data = sys.stdin.read().split()
+for _ in range(cases):
+    num = input()
 
-num_of_nums = data[0]
+    num1 = int(num)
+    num1 = bin(num1)
+    num1 = num1.count("1")
 
-for i in range(1, len(data)):
-    target = data[i]
-    hex = int(target, 16)
+    num2 = int(num, 16)
+    num2 = bin(num2)
+    num2 = num2.count("1")
 
-    hex_binary = bin(hex)[2:]
-    binary = bin(int(target))[2:]
-    b_1 = 0
-    b_2 = 0
-    for j in binary:
-        b_1 += int(j)
-    for k in hex_binary:
-        b_2 += int(k)
+    print(num1, num2)
 
-    print(f"{b_1} {b_2}")
-    
-    
+# for _ in range(cases):
+#     num = input()
+#     print(num)
+#     num = int(num)
+#     num = bin(num)
+#     print(num)
