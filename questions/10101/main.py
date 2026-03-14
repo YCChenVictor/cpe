@@ -1,34 +1,37 @@
-import sys
+def bangla(n):
+    answer = []
 
-lines = sys.stdin.read().splitlines()
+    def helper(n):
+        if n >= 10000000:
+            helper(n // 10000000)
+            answer.append('kuti')
+            n %= 10000000
+        if n >= 100000:
+            helper(n // 100000)
+            answer.append('lakh')
+            n %= 100000
+        if n >= 1000:
+            helper(n // 1000)
+            answer.append('hajar')
+            n %= 1000
+        if n >= 100:
+            helper(n // 100)
+            answer.append('shata')
+            n %= 100
+        if n > 0:
+            answer.append(str(n))
 
-for k in range (0, len(lines)):
-    line = lines[k]
-    index = str(k+1).rjust(4)
-    if line == '0':
-        print(f"{index}. {0}")
-        continue
-    answer = ""
-    group = []
-    while line:
-        group.append(line[-7:])
-        line = line[:-7]
-    group.reverse()
-   
-    sub_answers = [] 
-    for i in range(0, len(group)):
-        chunk = group[i]
-        chunk = chunk.zfill(7)
-        lakh = int(chunk[0:2])
-        hajar = int(chunk[2:4])
-        shata = int(chunk[4:5])
-        rest = int(chunk[5:7])
-        
-        out = []
-        if lakh: out.append(f"{lakh} lakh")
-        if hajar: out.append(f"{hajar} hajar")
-        if shata: out.append(f"{shata} shata")
-        if rest: out.append(str(rest))
-        sub_answers.append(" ".join(out))
-    
-    print(f"{index}. {' kuti '.join(sub_answers).replace('  ', ' ')}")
+    if n == 0:
+        return "0"
+
+    helper(n)
+    return " ".join(answer)
+
+i = 1
+while True:
+    try:
+        number = int(input())
+        print(f"{i:>4}. {bangla(number)}")
+        i += 1
+    except EOFError:
+        break
