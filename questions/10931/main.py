@@ -1,13 +1,10 @@
-import sys
-
-lines = sys.stdin.read().splitlines()
-
-for line in lines:
-    number = int(line)
-    binary_form = format(number, "b")
-    ones = sum(map(int, binary_form))
-    
-    if line == '0':
-        print("")
-    else:
-        print(f"The parity of {binary_form} is {ones} (mod 2).")
+while True:
+    try:
+        num = int(input())
+        if num == 0:
+            break
+        binary = bin(num).replace("0b", "")
+        digits = binary.count("1")
+        print(f"The parity of {binary} is {digits} (mod 2).")
+    except EOFError:
+        break
