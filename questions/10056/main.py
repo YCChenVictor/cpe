@@ -1,21 +1,25 @@
-# winning prob = p
-# losing prob = q
-# 1th player win = p + q^N * p + q^2N * p + ... = p (1 + q^N + q^2N + ...) = p/(1-q^N)
-# 2th player win = qp/(1-q^N)
-# 3th player win = q^2 * p/(1-q^N)
-# ...
+# Calculation
+# p = winning prob
+# q = losing prob = 1 - p
+# players = number of players
+# 1th win = p + q^players * p + q^(2 * players) * p + ... = x
+# 2th win = qp + q^players * q * p + ... = q * x
+# 3th win = q^2 * x
 
-import sys
+# x = p / (1 - q^players) = 0.1666/(1 - 0.8333^2)
+# answer = q^(winner - 1) * x
 
-data = sys.stdin.read().splitlines()
-for i in range(1, len(data)):
-    line = data[i]
-    numbers = line.split()
-    prob = float(numbers[1])
-    player = int(numbers[2])
-    players = int(numbers[0])
-    if prob == 0.0:
-        answer = 0
-    else:
-        answer = (1-prob)**(player-1) * prob / (1-(1-prob)**players)
-    print(f"{answer:.4f}")
+cases = input()
+
+while True:
+    try:
+        players, win_prob, winner = map(float, input().split())
+        if win_prob == 0:
+            print("0.0000")
+            continue
+        lose_prob = 1 - win_prob
+        x = win_prob / (1 - lose_prob ** players)
+        answer = lose_prob ** (winner - 1) * x
+        print(f"{answer:.4f}")
+    except EOFError:
+        break
