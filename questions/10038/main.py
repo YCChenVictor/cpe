@@ -1,17 +1,16 @@
-import sys
-
-for line in sys.stdin:
-    line = line.rstrip("\n")
-    numbers = line.split()
-    numbers.append(numbers[len(numbers) - 1])
-    seen = [False] * (len(numbers) - 2)
-    for i in range(2, len(numbers)):
-        abs_difference = abs(int(numbers[i]) - int(numbers[i - 1]))
-        if abs_difference > len(seen) - 1:
-            break
-        seen[abs_difference] = True
-
-    if all(seen):
-        print("Jolly")
-    else:
-        print("Not jolly")
+while True:
+    try:
+        line = input()
+        values = list(map(int, line.split()))
+        num_of_nums = values[0]
+        targets = [False] * (num_of_nums - 1)
+        for i in range(2, len(values)):
+            index = abs(values[i] - values[i - 1]) - 1
+            if index < len(targets):
+                targets[abs(values[i] - values[i - 1]) - 1] = True
+        if all(targets):
+            print("Jolly")
+        else:
+            print("Not jolly")
+    except EOFError:
+        break
