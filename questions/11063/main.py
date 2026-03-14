@@ -1,27 +1,25 @@
-import sys
+def check(numbers):
+    for i in range(len(numbers)):
+        for j in range(i, len(numbers)):
+            target = numbers[i] + numbers[j]
+            if target in sum:
+                return False
+            sum.add(numbers[i] + numbers[j])
+    return True
 
-lines = sys.stdin.read().splitlines()
 
-case = 1
-for i in range(1, len(lines), 3):
-    numbers = lines[i].split()
-    sums = set()
-    is_B2 = True
-    stop = False
-    for k in range(0, len(numbers)):
-        for s in range(k, len(numbers)):
-            sum = int(numbers[k]) + int(numbers[s])
-            if sum in sums:
-                is_B2 = False
-                stop = True
-                break
-            sums.add(sum)
-        if stop:
-            break
-            
-    if is_B2:
-        print(f"Case #{case}: It is a B2-Sequence.")
-    else:
-        print(f"Case #{case}: It is not a B2-Sequence.")
-    case += 1
-    print("")
+case = 0
+while True:
+    try:
+        nums = input()
+        numbers = list(map(int, input().split()))
+        space = input()
+        sum = set()
+        case += 1
+        if check(numbers):
+            print(f"Case #{case}: It is a B2-Sequence.")
+        else:
+            print(f"Case #{case}: It is not a B2-Sequence.")
+        print("")
+    except EOFError:
+        break
