@@ -1,32 +1,33 @@
-import sys
-
-lines = sys.stdin.read().splitlines()
+# rotate 180 degrees
+# 11 -> 33 (44)
+# 12 -> 32 (44)
+# 13 -> 31 (44)
+# 21 -> 23 (44)
+# 23 -> 21
+# 31 -> 13
 
 def check(matrix):
-    length = len(matrix)
-    for m in range(0, length):
-        for n in range(0, length):
-            if int(matrix[m][n]) < 0:
+    for i in range(len(matrix)):
+        for j in range(len(matrix) - i):
+            if matrix[i][j] < 0:
                 return False
-            mm, nn = length - 1 - m, length - 1 - n
-            if (m, n) <= (mm, nn):
-                if int(matrix[m][n]) != int(matrix[mm][nn]):
-                    return False
+            if matrix[i][j] != matrix[len(matrix) - i - 1][len(matrix) - j - 1]:
+                return False
     return True
+                
 
-i = 0
-i += 1
-case = 1
-while i < len(lines):
-    matrix_size = int(lines[i].replace("N = ", ""))
-    i += 1
-    matrix = []
-    for j in range(i, i+matrix_size):
-        matrix.append(lines[j].split())
-    i += matrix_size
-
-    if check(matrix):
-        print(f"Test #{case}: Symmetric.")
-    else:
-        print(f"Test #{case}: Non-symmetric.")
-    case += 1
+cases = input()
+current_case = 1
+while True:
+    try:
+        size = int(input().split()[-1])
+        matrix = []
+        for _ in range(size):
+            matrix.append(list(map(int, input().split())))
+        if check(matrix):
+            print(f"Test #{current_case}: Symmetric.")
+        else:
+            print(f"Test #{current_case}: Non-symmetric.")
+        current_case += 1
+    except EOFError:
+        break
