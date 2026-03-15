@@ -1,21 +1,19 @@
 import sys
 
 lines = sys.stdin.read().splitlines()
-lines.append('')
-
-answer = {}
-for i in range(2, len(lines)):
-    if lines[i] == '':
-        keys = list(answer.keys())
-        keys.sort()
-        values = list(answer.values())
-        for key in keys:
-            print(f"{key} {answer[key]/sum(values) * 100:.4f}")
-        print('')
-        answer = {}
-        continue
-
-    if answer.get(lines[i]) == None:
-        answer[lines[i]] = 1
+lines = lines[2:]
+lines.append("")
+collection = {}
+total = 0
+for line in lines:
+    if line == "":
+        for key in sorted(collection):
+            print(f"{key} {collection[key]/total * 100:.4f}")
+        print("")
+        collection = {}
+        total = 0
     else:
-        answer[lines[i]] += 1
+        if collection.get(line) is None:
+            collection[line] = 0
+        total += 1
+        collection[line] = collection[line] + 1
