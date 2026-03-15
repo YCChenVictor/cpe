@@ -1,40 +1,31 @@
-import sys
+cases = int(input())
 
-lines = sys.stdin.read().splitlines()
-
-i = 0
-num_of_case = 1
-i += 1
-digits = list("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-while i < len(lines):
-    costs = ""
-    for j in range(i, i + 4):
-        costs += " " + lines[j]
-    i += 4
-    costs = costs.split()
-    cost_mapping = {}
-    for c in range(0, len(digits)):
-        cost_mapping[digits[c]] = costs[c]
-    numbers = int(lines[i])
-    i += 1
-    print(f"Case {num_of_case}:")
-    num_of_case += 1
-    for k in range(i, i + numbers):
-        answer = ''
-        target = int(lines[k])
-        transform = ""
-        cost_total = []
-        for mod in range(2, 37):
-            cost = 0
-            n = target
-            while n > 0:
-                n, r = divmod(n, mod)
-                cost += int(cost_mapping[digits[r]])
-            cost_total.append(cost)
-        lowest_cost = min(cost_total)
-        for a in range(0, len(cost_total)):
-            if cost_total[a] <= lowest_cost:
-                answer += " " + str(a+2)
-        print(f"Cheapest base(s) for number {target}:{answer}")
-    i += numbers
+for i in range(cases):
+    print(f"Case {i + 1}:")
+    costs = []
+    for _ in range(4):
+        cost_row = input().split()
+        for cost in cost_row:
+            costs.append(int(cost))
+    
+    numbers = int(input())
+    for _ in range(numbers):
+        number = int(input())
+        total_cost = {}
+        lowest_cost = float('inf')
+        for i in range(2, 37):  # 2 ~ 36
+            total = 0
+            to_divide = number
+            while to_divide > 0:
+                digit = to_divide % i
+                total += costs[digit]
+                to_divide //= i
+            total_cost[i] = total
+            if total < lowest_cost:
+                lowest_cost = total
+        bases = []
+        for key in total_cost:
+            if total_cost[key] == lowest_cost:
+                bases.append(str(key))
+        print(f"Cheapest base(s) for number {str(number)}: {' '.join(bases)}")
     print("")
