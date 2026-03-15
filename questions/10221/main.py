@@ -1,26 +1,25 @@
-import sys
 import math
 
-lines = sys.stdin.read().splitlines()
+# arc = 2 * pi * r * theta/360
+# chord = 2 * r * sin(theta/2)
 
-for line in lines:
-    [distance, angle, unit] = line.split()
+while True:
+    try:
+        s, a, unit = input().split()
+        s = int(s)
+        a = int(a)
 
-    distance = int(distance)
-    angle = int(angle)    
+        if unit == "min":
+            a = a / 60
 
-    degree = 0
-    if unit == 'deg':
-        degree = angle
-    else:
-        degree = angle / 60
+        a = min(a, 360 - a)
 
-    degree = degree % 360
-    degree = min(360 - degree, degree)
+        r = 6440 + s
 
-    radius = distance + 6440
- 
-    arc = 2 * math.pi * radius * degree/360
-    chord = 2 * math.sin((degree/360 * 2 * math.pi) / 2) * radius
-
-    print(f"{round(arc, 6):.6f}", f"{round(chord, 6):.6f}")
+        rad = 2 * math.pi * (a/360)
+        
+        arc = 2 * math.pi * r * (a/360)
+        chord = 2 * r * math.sin(rad/2)
+        print(f"{arc:.6f}", f"{chord:.6f}")
+    except EOFError:
+        break
