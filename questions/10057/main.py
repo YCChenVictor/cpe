@@ -1,35 +1,18 @@
-import sys
+while True:
+    try:
+        cases = int(input())
+        nums = list(map(int, input().split()))
+        nums.sort()
 
-lines = sys.stdin.read().splitlines()
+        length = len(nums)
+        low = nums[(length - 1) // 2]
+        high = nums[length // 2]
 
-i = 0
-for i in range(0, len(lines), 2):
-    num_of_values = int(lines[i])
-    numbers = [int(x) for x in lines[i+1].split()]
-    
-    even = False
-    if num_of_values % 2 == 0:
-        even = True
+        count = 0
+        for num in nums:
+            if low <= num <= high:
+                count += 1
 
-    medium_left = numbers[len(numbers) // 2 - 1]
-    medium_right = numbers[len(numbers) // 2]
-    if even:
-        medium = medium_left
-    else:
-        medium = medium_right
-
-    count = 0
-    for i in range(0, len(numbers)):
-        if numbers[i] == medium:
-            count += 1
-
-    other = 1
-    if even:
-        medium = medium_left
-        other = medium_right - medium_left + 1
-        if medium_left != medium_right:
-            count += 1
-    else:
-        medium = medium_right
-
-    print(medium, count, other)
+        print(low, count, high - low + 1)
+    except EOFError:
+        break
