@@ -1,26 +1,22 @@
-import sys
+while True:
+    try:
+        coordinates = input().split()
+        dots = set()
+        for i in range(0, len(coordinates), 2):
+            current = coordinates[i] + " " + coordinates[i+1]
+            if current in dots:
+                dup = current
+            dots.add(current)
+        dots.remove(dup)
 
-lines = sys.stdin.read().splitlines()
+        dots = list(dots)
+        dot1 = list(map(float, dots[0].split()))
+        dot2 = list(map(float, dots[1].split()))
+        dup = list(map(float, dup.split()))
 
-for line in lines:
-    collection = set()
-    numbers = line.split()
-    shared = []
-    for i in range(0, len(numbers) - 1, 2):
-        if (numbers[i], numbers[i + 1]) in collection:
-            shared = (numbers[i], numbers[i + 1])
-        else:
-            collection.add((numbers[i], numbers[i + 1]))
+        answer = [dot2[0] + dot1[0] - dup[0], dot2[1] + dot1[1] - dup[1]]
 
-    x, y = 0, 0
-    for element in collection:
-        (x_d, y_d) = element
-        x += float(x_d)
-        y += float(y_d)
-
-    (x_s, y_s) = shared
-    
-    x -= 2 * float(x_s)
-    y -= 2 * float(y_s)
-
-    print(f"{x:.3f}", f"{y:.3f}")
+        print(' '.join([f"{x:.3f}" for x in answer]))
+        
+    except EOFError:
+        break
