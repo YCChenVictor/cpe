@@ -1,70 +1,40 @@
-import sys
+cases = int(input())
 
-lines = sys.stdin.read().splitlines()
+for case in range(cases):
+    rows, columns, centers = map(int, input().split())
 
-retangles = {}
-i = 0
-cases = lines[0]
-i += 1
-while i < len(lines):
-    print(lines[i])
-    [num_of_row, num_of_col, examples] = lines[i].split()
-    num_of_row = int(num_of_row)
-    num_of_col = int(num_of_col)
-    examples = int(examples)
-    
-    i += 1
-     
-    retangle = []
-    for j in range(i, i + num_of_row):
-        row = lines[j]
-        row = list(row)
-        retangle.append(row)
+    matrix = []
+    for row in range(rows):
+        matrix.append(input())
 
-    i += num_of_row
+    for center in range(centers):
+        r, c = map(int, input().split())
+        ch = matrix[r][c]
 
-    central = []
-    for k in range(i, i + examples):
-        central.append(lines[k])
-
-    i += examples
-   
-    for center in central:
-        x, y = map(int, center.split())   # x=row, y=col
-        should_be = retangle[x][y]
-
-        answer = 1
-        k = 0
-
+        answer = 1  ## init is it self
+        k = 1
         while True:
-            k += 1
-            left   = y - k
-            right  = y + k
-            top    = x - k
-            bottom = x + k
+            top = r - k
+            bottom = r + k
+            left = c - k
+            right = c + k
 
-            # out of bounds => stop
-            if left < 0 or top < 0 or right >= num_of_col or bottom >= num_of_row:
+            if top < 0 or left < 0 or bottom > (rows - 1) or right > (columns - 1):
                 break
 
+            extract_matrix = []
             ok = True
-
-            # check top & bottom rows
-            for col in range(left, right + 1):
-                if retangle[top][col] != should_be or retangle[bottom][col] != should_be:
-                    ok = False
-                    break
-
-            # check left & right columns (skip corners)
-            if ok:
-                for row in range(top + 1, bottom):
-                    if retangle[row][left] != should_be or retangle[row][right] != should_be:
+            for i in range(top, bottom):
+                for j in range(left, right):
+                    if matrix[i][j] != ch:
                         ok = False
-                        break
-
+                        break 
+                if not ok:
+                    break
             if not ok:
                 break
 
-            answer += 2   # 1->3->5...
+            answer = k * 2 + 1
+            k += 1
 
-        print(answer) 
+        print(answer)
