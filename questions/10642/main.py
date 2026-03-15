@@ -1,17 +1,12 @@
-import sys
+cases = int(input())
 
-lines = sys.stdin.read().splitlines()
 
 def index(x, y):
     s = x + y
-    return s * (s+1) / 2 + x
+    return (1 + s) * s / 2 + x
 
-num_of_ex = int(lines[0])
-for i in range(1, len(lines)):
-    [x_1, y_1, x_2, y_2] = lines[i].split()
-    index_1 = index(int(x_1), int(y_1))
-    index_2 = index(int(x_2), int(y_2))
 
-    print(f"Case {i}: {int(index_2 - index_1)}")
+for case in range(cases):
+    x1, y1, x2, y2 = map(int, input().split())
     
-
+    print(f"Case {case + 1}: {int(index(x2, y2) - index(x1, y1))}")
