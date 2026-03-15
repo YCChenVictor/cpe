@@ -1,22 +1,19 @@
-import sys
+while True:
+    number = int(input())
+    if number == 0:
+        break
 
-lines = sys.stdin.read().splitlines()
-
-for line in lines:
-    if line == '0':
+    if number % 9 != 0:
+        print(f"{number} is not a multiple of 9.")
         continue
 
-    number = line
-    total = sum(map(int, number))
-    if total % 9 != 0:
-        print(f'{line} is not a multiple of 9.')
-        break    
-    
-    degree = 0
-    while True:
-        total = sum(map(int, number))
+    degree = 1 # we already make sure it is 9
+    to_divide = number
+    while to_divide > 9:
+        str_num = str(to_divide)
+        sum = 0
+        for digit in str_num:
+            sum += int(digit)
+        to_divide = sum // 3
         degree += 1
-        if total == 9:
-            print(f'{line} is a multiple of 9 and has 9-degree {degree}.')
-            break
-        number = str(total)
+    print(f"{number} is a multiple of 9 and has 9-degree {degree}.")
