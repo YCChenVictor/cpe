@@ -1,30 +1,28 @@
-import sys
+#  no hartals on on Fridays and Saturdays: 5, 6, 12, 13, ...
+#  start from Sunday
 
-data = sys.stdin.read().splitlines()
+cases = int(input())
 
-i = 0
-tests = data[0]
-i += 1
-while i < len(data):
-    strikes = set()
-    days = int(data[i])
-    i += 1
-    parties = int(data[i])
-    i += 1
-    hartal_parameters = []
-    for j in range(0, parties):
-        hartal_parameters.append(int(data[i]))
-        i += 1
-    for k in range(0, len(hartal_parameters)):
-        hartal_parameter = hartal_parameters[k]
-        mod = days // hartal_parameters[k]
-        for m in range(0, mod):
-            strikes.add((m + 1) * hartal_parameter)
-    strike_elements = list(strikes)
-    for element in strike_elements:
-        if element % 7 == 0:
-            strikes.discard(element)
-        if element % 7 == 6:
-            strikes.discard(element)
+for _ in range(cases):
+    days = int(input())
+    parties = int(input())
+    strikes = [0] * days  # 0 means no strike
+        
+    for j in range(parties):
+        party = int(input())
+        for i in range(len(strikes)):
+            if (i + 1) % party == 0:
+                strikes[i] = 1
 
-    print(len(strikes))
+    # no Friday & Saturday
+    friday = 5
+    while friday < len(strikes):
+        strikes[friday] = 0
+        friday = friday + 7
+
+    saturday = 6
+    while saturday < len(strikes):
+        strikes[saturday] = 0
+        saturday = saturday + 7
+
+    print(sum(strikes))
