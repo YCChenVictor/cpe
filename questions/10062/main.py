@@ -1,25 +1,14 @@
-import sys
-
-lines = sys.stdin.read().splitlines()
-
-for line in lines:
-    collect = {}
-    for ch in line:
-        asc = ord(ch)
-        if collect.get(asc) == None:
-            collect[asc] = 1
-        else:
-            collect[asc] += 1
-
-    swap_collect = {}
-    for k in collect:
-        if swap_collect.get(collect[k]) == None:
-            swap_collect[collect[k]] = []
-        swap_collect[collect[k]].append(k)
-
-    for k in sorted(swap_collect):
-        asc_codes = swap_collect[k]
-        asc_codes.sort(reverse=True)
-        for asc_code in asc_codes:
-            print(asc_code, k)
-    print(" ")        
+while True:
+    try:
+        line = input()
+        collection = {}
+        for ch in line:
+            encode = ord(ch)
+            if collection.get(encode) is None:
+                collection[encode] = 0
+            collection[encode] = collection[encode] + 1
+        for code, freq in sorted(collection.items(), key=lambda item: (item[1], -item[0])):  # sort with frequency first, then the key
+            print(code, freq)
+        print("")
+    except EOFError:
+        break
