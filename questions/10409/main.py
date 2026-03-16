@@ -1,23 +1,21 @@
-import sys
+# init: 1, 2, 3 -> top, north, west
 
-lines = sys.stdin.read().splitlines()
-
-num_of_commands = 0
-i = 0
-while int(lines[i]) != 0:
-    num_of_commands = int(lines[i])
-    i += 1
-    top, bottom, north, south, west, east = 1, 6, 2, 5, 3, 4
-    for j in range(i, i + num_of_commands):
-        command = lines[j]
-        if command == 'north':
-            top, bottom, north, south = south, north, top, bottom
-        if command == 'south':
-            top, bottom, north, south = north, south, bottom, top
-        if command == 'east':
-            top, west, bottom, east = west, bottom, east, top
-        if command == 'west':
-            top, east, west, bottom = east, bottom, top, west
-    print(top)
-    i += num_of_commands
-    num_of_commands = int(lines[i])
+while True:
+    try:
+        moves = int(input())
+        if moves == 0:
+            break
+        top, north, west, bottom, south, east = 1, 2, 3, 6, 5, 4
+        for move in range(moves):
+            direction = input()
+            if direction == "north":
+                top, bottom, north, south = south, north, top, bottom
+            if direction == "south":
+                top, bottom, north, south = north, south, bottom, top
+            if direction == "east":
+                top, west, bottom, east = west, bottom, east, top
+            if direction == "west":
+                top, west, bottom, east = east, top, west, bottom
+        print(top)
+    except EOFError:
+        break
