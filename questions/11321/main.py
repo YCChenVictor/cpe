@@ -1,37 +1,24 @@
-import sys
+def mod_c_style(x, m):
+    return x % m if x >= 0 else -((-x) % m)
 
-lines = sys.stdin.read().splitlines()
 
-i = 0
-while i < len(lines):
-    if lines[i] == "":
+def sort_key(x, m):
+    r = mod_c_style(x, m)
+    if x % 2 != 0:   # odd
+        return (r, 0, -x)   # the smaller, the prior
+    else:            # even
+        return (r, 1, x)
+
+
+while True:
+    n, m = map(int, input().split())
+    print(n, m)
+
+    if n == 0 and m == 0:
         break
-    [num_of_nums, base] = lines[i].split()
-    num_of_nums = int(num_of_nums)
-    base = int(base)
-    i += 1
-    values = []
-    for j in range(i, i + num_of_nums):
-        values.append(int(lines[j]))
-    values.sort()
-    collection = {}
-    for m in range(0, len(values)):
-        current = values[m]
-        if current < 0:
-            mod = -(abs(current) % base)
-        else:
-            mod = current % base
-        if collection.get(mod) is None:
-            collection[mod] = []
-        if current % 2 == 0:
-            collection[mod] = collection[mod] + [current]
-        else:
-            collection[mod] = [current] + collection[mod]
-    keys = list(collection.keys())
-    keys.sort()
-    print(num_of_nums, base)
-    for key in keys:
-        for element in collection[key]:
-            print(element)
-    i += num_of_nums 
-    
+
+    nums = [int(input()) for _ in range(n)]
+    nums.sort(key=lambda x: sort_key(x, m))
+
+    for x in nums:
+        print(x)
